@@ -2,15 +2,25 @@
   --primary-color: #161D6F;
   --primary-color-light: #0B2F9F;
   --secondary-color: #98DED9;
-  --background-color: #C7FFD8;
+  --background-color: #defee8;
   --success: #4caf50;
   --warning: #ff9800;
   --error: #f44336;
+  --text-primary: #161D6F; 
+  --text-secondary: #4A4A4A;
+  --text-on-dark: #FFFFFF; 
 }
 
 body {
   font-family: Arial, sans-serif;
   background-color: var(--background-color);
-  color: var(--text-color);
+  color: var(--text-primary);
   margin: 0;
+}
+
+#movie-list{
+  margin: 40px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
 }
