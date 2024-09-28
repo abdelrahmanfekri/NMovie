@@ -1,0 +1,16 @@
+:root {
+  --primary-color: #161D6F;
+  --primary-color-light: #0B2F9F;
+  --secondary-color: #98DED9;
+  --background-color: #C7FFD8;
+  --success: #4caf50;
+  --warning: #ff9800;
+  --error: #f44336;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+}
