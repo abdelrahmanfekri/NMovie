@@ -2,9 +2,7 @@
 
 import { MovieDetails, MovieType } from "@/types";
 
-const api_key =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxOWFhODU3MTU5NmUyZjBjZTBlNjI0MzUzNjgwNDI4YyIsIm5iZiI6MTcyNzUyOTQzOS4yNjkzODgsInN1YiI6IjY2ZjdmZWMxMTQwZmJmNmExYTVmMzYyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6r-CJkmguGiynbeJGD7631FO_-8lgimByCfkXyggj_8";
-
+const api_key = process.env.TMDB_API_KEY;
 // {
 //   adult: false,
 //   backdrop_path: '/cyKH7pDFlxIXluqRyNoHHEpxSDX.jpg',
@@ -109,7 +107,9 @@ const api_key =
 //   "order": 0
 // },
 
-export async function getMovieList(page: number): Promise<[MovieType]> {
+export async function getMovieList(
+  page: number
+): Promise<{ movies: [MovieType]; totalPages: number }> {
   const url = `https://api.themoviedb.org/3/discover/movie?page=${page}/`;
   const options = {
     method: "GET",
@@ -120,16 +120,17 @@ export async function getMovieList(page: number): Promise<[MovieType]> {
   };
   const response = await fetch(url, options);
   const data = await response.json();
-  let movies: [MovieType] = data.results.map((movie: any) => {
-    return {
-      id: movie.id,
-      title: movie.title,
-      poster_path: movie.poster_path,
-      release_date: movie.release_date,
-      vote_average: movie.vote_average,
-    };
-  });
-  return movies;
+  let movies: [MovieType] =
+    data.results?.map((movie: any) => {
+      return {
+        id: movie.id,
+        title: movie.title,
+        poster_path: movie.poster_path,
+        release_date: movie.release_date,
+        vote_average: movie.vote_average,
+      };
+    }) || [];
+  return { movies, totalPages: data.total_pages };
 }
 
 export async function getMovieDetails(movieId: string): Promise<MovieDetails> {
@@ -152,23 +153,24 @@ export async function getMovieDetails(movieId: string): Promise<MovieDetails> {
       name: genre.name,
     };
   });
-  const cast = creditsData.cast
-    .map((actor: any) => {
-      if (
-        actor.known_for_department === "Acting" &&
-        actor.profile_path &&
-        actor.name &&
-        actor.character
-      ) {
-        return {
-          name: actor.name,
-          character: actor.character,
-          image_path: actor.profile_path,
-        };
-      }
-    })
-    .filter((actor: any) => actor);
-  const director = creditsData.crew.find(
+  const cast =
+    creditsData.cast
+      .map((actor: any) => {
+        if (
+          actor.known_for_department === "Acting" &&
+          actor.profile_path &&
+          actor.name &&
+          actor.character
+        ) {
+          return {
+            name: actor.name,
+            character: actor.character,
+            image_path: actor.profile_path,
+          };
+        }
+      })
+      .filter((actor: any) => actor) || [];
+  const director = creditsData.crew?.find(
     (actor: any) => actor.job === "Director"
   );
   return {
@@ -199,7 +201,7 @@ export async function searchMovie(query: string): Promise<[MovieType]> {
   };
   const response = await fetch(url, options);
   const data = await response.json();
-  let movies: [MovieType] = data.results.map((movie: any) => {
+  let movies: [MovieType] = data.results?.map((movie: any) => {
     return {
       id: movie.id,
       title: movie.title,

@@ -1,0 +1,13 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.pageInfo {
+  margin: 0 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
