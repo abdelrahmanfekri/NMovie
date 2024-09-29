@@ -3,16 +3,16 @@ import MovieCard from "@/components/MovieCard";
 import { searchMovie } from "@/lib/data";
 import React from "react";
 
-export const metadata = async ({
+export async function generateMetadata({
   searchParams,
 }: {
   searchParams: { q: string };
-}) => {
+}) {
   return {
     title: `NMovie - Search: ${searchParams.q}`,
     description: `Search results for ${searchParams.q}`,
   };
-};
+}
 
 export default async function page({
   searchParams,
