@@ -1,18 +1,17 @@
-"use client";
-import MovieCard from "@/components/MovieCard";
-import { useFavoritesStore } from "@/store/favorites";
+import FavoritesMovieList from "@/components/MovieList";
+import { Metadata } from "next";
 import React from "react";
 
+export const metadata: Metadata = {
+  title: "NMovie - Favorites",
+  description: "Your favorite movies",
+};
+
 export default function page() {
-  const favorites = useFavoritesStore((state) => state.favorites);
   return (
     <div className="container">
       <h1>Favorites</h1>
-      <div className="movie-list">
-        {favorites.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-      </div>
+      <FavoritesMovieList />
     </div>
   );
 }

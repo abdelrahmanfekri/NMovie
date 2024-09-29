@@ -22,7 +22,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       <Link href={`/movie/${movie.id}`}>
         <div className={styles.imageContainer}>
           <ImageWithFallback
-            layout="fill"
+            fill
             src={getFullImagePath(movie.poster_path)}
             alt={`Poster for ${movie.title}`}
           />

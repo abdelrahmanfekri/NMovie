@@ -109,7 +109,7 @@ const api_key = process.env.TMDB_API_KEY;
 
 export async function getMovieList(
   page: number
-): Promise<{ movies: [MovieType]; totalPages: number }> {
+): Promise<{ movies: Array<MovieType>; totalPages: number }> {
   const url = `https://api.themoviedb.org/3/discover/movie?page=${page}/`;
   const options = {
     method: "GET",
@@ -120,12 +120,13 @@ export async function getMovieList(
   };
   const response = await fetch(url, options);
   const data = await response.json();
-  let movies: [MovieType] =
+  let movies: Array<MovieType> =
     data.results?.map((movie: any) => {
       return {
         id: movie.id,
         title: movie.title,
         poster_path: movie.poster_path,
+        backdrop_path: movie.backdrop_path,
         release_date: movie.release_date,
         vote_average: movie.vote_average,
       };
@@ -177,9 +178,11 @@ export async function getMovieDetails(movieId: string): Promise<MovieDetails> {
     id: detailsData.id,
     title: detailsData.title,
     poster_path: detailsData.poster_path,
+    backdrop_path: detailsData.backdrop_path,
     release_date: detailsData.release_date,
     vote_average: detailsData.vote_average,
     synopsis: detailsData.overview,
+    home_page: detailsData.homepage,
     genres: genres,
     director: {
       name: director?.name,
@@ -190,7 +193,7 @@ export async function getMovieDetails(movieId: string): Promise<MovieDetails> {
   };
 }
 
-export async function searchMovie(query: string): Promise<[MovieType]> {
+export async function searchMovie(query: string): Promise<Array<MovieType>> {
   const url = `https://api.themoviedb.org/3/search/movie?query=${query}`;
   const options = {
     method: "GET",

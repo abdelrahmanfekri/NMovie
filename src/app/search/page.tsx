@@ -1,6 +1,18 @@
+import EmptyComponent from "@/components/EmptyComponent";
 import MovieCard from "@/components/MovieCard";
 import { searchMovie } from "@/lib/data";
 import React from "react";
+
+export const metadata = async ({
+  searchParams,
+}: {
+  searchParams: { q: string };
+}) => {
+  return {
+    title: `NMovie - Search: ${searchParams.q}`,
+    description: `Search results for ${searchParams.q}`,
+  };
+};
 
 export default async function page({
   searchParams,
@@ -10,6 +22,14 @@ export default async function page({
   };
 }) {
   const results = await searchMovie(searchParams.q);
+  if (!results || results.length === 0) {
+    return (
+      <EmptyComponent
+        title="No results found"
+        description="Try use search keywords"
+      />
+    );
+  }
   return (
     <section className="container">
       <h1>Search Results</h1>

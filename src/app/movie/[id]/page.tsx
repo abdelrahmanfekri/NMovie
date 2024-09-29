@@ -4,6 +4,15 @@ import { getFullImagePath } from "@/lib/utils";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import PersonCard from "@/components/PersonCard";
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const movie = await getMovieDetails(params.id);
+  return {
+    title: `NMovie - ${movie.title}`,
+    description: movie.synopsis,
+    image: getFullImagePath(movie.poster_path),
+  };
+}
+
 export default async function movieDetailsPage({
   params: { id },
 }: {
@@ -14,10 +23,10 @@ export default async function movieDetailsPage({
     <div>
       <header className={styles.header}>
         <ImageWithFallback
-          src={getFullImagePath(movie.poster_path)}
-          layout="fill"
-          objectFit="cover"
-          alt={movie.title}
+          src={getFullImagePath(movie.backdrop_path)}
+          fill
+          alt={movie.title + " backdrop"}
+          className="object-cover"
         />
         <div className={styles.headerContent}>
           <h1>{movie.title}</h1>
@@ -37,6 +46,9 @@ export default async function movieDetailsPage({
           <div className={styles.synopsis}>
             <h2>Synopsis</h2>
             <p>{movie.synopsis}</p>
+            <a href={movie.home_page} target="_blank" rel="noreferrer">
+              Official Website
+            </a>
           </div>
         </main>
         <aside className={styles.crew}>
