@@ -121,7 +121,7 @@ export async function getMovieList(
   const response = await fetch(url, options);
   const data = await response.json();
   const movies: Array<MovieType> =
-    data.results?.map((movie: any) => {
+    data.results?.map((movie: MovieType) => {
       return {
         id: movie.id,
         title: movie.title,
@@ -148,31 +148,44 @@ export async function getMovieDetails(movieId: string): Promise<MovieDetails> {
   const creditsResponse = await fetch(creditsUrl, options);
   const detailsData = await detailsResponse.json();
   const creditsData = await creditsResponse.json();
-  const genres = detailsData.genres.map((genre: any) => {
-    return {
-      id: genre.id,
-      name: genre.name,
-    };
-  });
+  const genres = detailsData.genres.map(
+    (genre: { id: string; name: string }) => {
+      return {
+        id: genre.id,
+        name: genre.name,
+      };
+    }
+  );
   const cast =
     creditsData.cast
-      .map((actor: any) => {
-        if (
-          actor.known_for_department === "Acting" &&
-          actor.profile_path &&
-          actor.name &&
-          actor.character
-        ) {
-          return {
-            name: actor.name,
-            character: actor.character,
-            image_path: actor.profile_path,
-          };
+      .map(
+        (actor: {
+          known_for_department: string;
+          profile_path: string;
+          name: string;
+          character: string;
+        }) => {
+          if (
+            actor.known_for_department === "Acting" &&
+            actor.profile_path &&
+            actor.name &&
+            actor.character
+          ) {
+            return {
+              name: actor.name,
+              character: actor.character,
+              image_path: actor.profile_path,
+            };
+          }
         }
-      })
-      .filter((actor: any) => actor) || [];
+      )
+      .filter(
+        (actor: { name: string; character: string; image_path: string }) =>
+          actor
+      ) || [];
   const director = creditsData.crew?.find(
-    (actor: any) => actor.job === "Director"
+    (actor: { job: string; name: string; profile_path: string }) =>
+      actor.job === "Director"
   );
   return {
     id: detailsData.id,
@@ -204,7 +217,7 @@ export async function searchMovie(query: string): Promise<Array<MovieType>> {
   };
   const response = await fetch(url, options);
   const data = await response.json();
-  const movies: [MovieType] = data.results?.map((movie: any) => {
+  const movies: [MovieType] = data.results?.map((movie: MovieType) => {
     return {
       id: movie.id,
       title: movie.title,

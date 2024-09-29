@@ -1,7 +1,6 @@
 import React from "react";
 import ImageWithFallback from "./ImageWithFallback";
 import styles from "@/styles/person-card.module.css";
-import { getFullImagePath } from "@/lib/utils";
 export default function PersonCard({
   name,
   image,

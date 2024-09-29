@@ -8,9 +8,9 @@ import Link from "next/link";
 import ImageWithFallback from "./ImageWithFallback";
 import { useFavoritesStore } from "@/store/favorites";
 
-type MovieCardProps = {
+interface MovieCardProps {
   movie: MovieType;
-};
+}
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const favorites = useFavoritesStore((state) => state.favorites);
@@ -31,7 +31,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       <button
         className={styles.love}
         onClick={() => {
-          isFavorite ? removeFavorite(movie.id) : addFavorite(movie);
+          if (isFavorite) {
+            removeFavorite(movie.id);
+          } else {
+            addFavorite(movie);
+          }
         }}
       >
         <Heart size={24} fill={isFavorite ? "red" : ""} color="red" />
