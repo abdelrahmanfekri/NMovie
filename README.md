@@ -41,10 +41,10 @@ Make sure you have any package management I used bun in my case.
    ```
 4. Run the development server:
    ```
-   bun dev
+   bun --bun run dev
    ```
 
-[Image for Search Results]
+![image](https://github.com/user-attachments/assets/7669cc6e-810e-4987-a044-cf4b20432465)
 
 ## Key Implementations
 
@@ -52,8 +52,7 @@ Make sure you have any package management I used bun in my case.
 - **Movie Details**: Dedicated page for each movie with comprehensive information
 - **Favorites Management**: Add/remove favorites with Zustand and local storage persistence
 - **Responsive Design**: Ensures optimal viewing across devices using CSS modules
-- **State Management**: Zustand for efficient state handling, particularly for favorites
-- **Error Handling**: Graceful error management and loading states
+- **Error Handling**: Error management and loading states
 - **Performance Optimization**: Image optimization, and code splitting.
 - **Accessibility**: Semantic HTML.
 
@@ -63,7 +62,7 @@ Make sure you have any package management I used bun in my case.
 ## Design Decisions
 
 - Server-side rendering for improved SEO and initial load performance.
-- CSS Modules for scoped styling.
+- CSS Modules for styling.
 - Zustand for state management.
 - TypeScript for type safety.
 
@@ -74,9 +73,10 @@ Make sure you have any package management I used bun in my case.
 - Implementing responsive design across various screen sizes
 - Ensuring type safety
 - Managing favorites state
+- Handling errors and loading states
   
 ## Additional Features and Bonus Tasks
 
-Pagination: Implemented a custom pagination component to allow users to browse large set of movies.
-Performance Optimization: Utilized Next.js Server Sider Render and Image component for automatic image optimization.
-Animation: Add css animation and effects.
+- Pagination: Implemented a custom pagination component to allow users to browse large set of movies.
+- Performance Optimization: Utilized Next.js Server Sider Render and Image component for automatic image optimization.
+- Animation: Add css animation and effects.
