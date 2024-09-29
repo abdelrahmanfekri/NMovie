@@ -1,68 +1,67 @@
 .card {
-    position: relative;
-    width: 250px;
-    background-color: var(--secondary-color);
-    border-radius: 8px;
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .imageContainer {
-    position: relative;
-    width: 250px;
-    height: 350px;
-  }
+  position: relative;
+  width: 250px;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-  .love {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    top: 10px;
-    right: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border: none;
-    border-radius: 50%;
-    text-align: center;
-    padding: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.imageContainer {
+  position: relative;
+  width: 250px;
+  height: 350px;
+}
+
+.love {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  text-align: center;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.love:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.info {
+  padding: 16px;
+}
+
+.info h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
   }
-  
-  .love:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
-  
-  .info {
-    padding: 16px;
-  }
-  
-  .info h2 {
-    margin: 0 0 8px 0;
-    font-size: 1.2rem;
-    font-weight: 900;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .info p {
-    margin: 4px 0;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .card {
-      width: 100%;
-      max-width: 250px;
-      margin: 0 auto;
-    }
-  }
+}

@@ -1,29 +1,40 @@
+"use client";
 import { MovieType } from "@/types";
 import React from "react";
 import styles from "@/styles/card.module.css";
 import { Heart, Star } from "lucide-react";
-import Image from "next/image";
 import { getFullImagePath } from "@/lib/utils";
 import Link from "next/link";
+import ImageWithFallback from "./ImageWithFallback";
+import { useFavoritesStore } from "@/store/favorites";
 
 type MovieCardProps = {
   movie: MovieType;
 };
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+  const favorites = useFavoritesStore((state) => state.favorites);
+  const addFavorite = useFavoritesStore((state) => state.addFavorite);
+  const removeFavorite = useFavoritesStore((state) => state.removeFavorite);
+  let isFavorite = favorites.some((fav) => fav.id === movie.id);
   return (
     <div className={styles.card}>
       <Link href={`/movie/${movie.id}`}>
         <div className={styles.imageContainer}>
-          <Image
+          <ImageWithFallback
             layout="fill"
             src={getFullImagePath(movie.poster_path)}
             alt={`Poster for ${movie.title}`}
           />
         </div>
       </Link>
-      <button className={styles.love}>
-        <Heart size={24} fill="red" color="red" />
+      <button
+        className={styles.love}
+        onClick={() => {
+          isFavorite ? removeFavorite(movie.id) : addFavorite(movie);
+        }}
+      >
+        <Heart size={24} fill={isFavorite ? "red" : ""} color="red" />
       </button>
       <div className={styles.info}>
         <h2>{movie.title}</h2>

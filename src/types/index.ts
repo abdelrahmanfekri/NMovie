@@ -9,7 +9,7 @@ export interface MovieType {
 export interface MovieDetails extends MovieType {
   synopsis: string;
   genres: { id: string; name: string }[];
-  director: string;
-  cast: { name: string; character: string }[];
+  director: { name: string; image_path: string };
+  cast: { name: string; character: string; image_path: string }[];
   runtime: number;
 }
