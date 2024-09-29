@@ -16,7 +16,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const favorites = useFavoritesStore((state) => state.favorites);
   const addFavorite = useFavoritesStore((state) => state.addFavorite);
   const removeFavorite = useFavoritesStore((state) => state.removeFavorite);
-  let isFavorite = favorites.some((fav) => fav.id === movie.id);
+  const isFavorite = favorites.some((fav) => fav.id === movie.id);
   return (
     <div className={styles.card}>
       <Link href={`/movie/${movie.id}`}>
