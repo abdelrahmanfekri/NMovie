@@ -120,7 +120,7 @@ export async function getMovieList(
   };
   const response = await fetch(url, options);
   const data = await response.json();
-  let movies: Array<MovieType> =
+  const movies: Array<MovieType> =
     data.results?.map((movie: any) => {
       return {
         id: movie.id,
@@ -204,7 +204,7 @@ export async function searchMovie(query: string): Promise<Array<MovieType>> {
   };
   const response = await fetch(url, options);
   const data = await response.json();
-  let movies: [MovieType] = data.results?.map((movie: any) => {
+  const movies: [MovieType] = data.results?.map((movie: any) => {
     return {
       id: movie.id,
       title: movie.title,
