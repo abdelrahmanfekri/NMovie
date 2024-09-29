@@ -2,6 +2,7 @@ import { getMovieDetails } from "@/lib/data";
 import styles from "@/styles/movie-details.module.css";
 import { getFullImagePath } from "@/lib/utils";
 import ImageWithFallback from "@/components/ImageWithFallback";
+import PersonCard from "@/components/PersonCard";
 
 export default async function movieDetailsPage({
   params: { id },
@@ -10,71 +11,56 @@ export default async function movieDetailsPage({
 }) {
   const movie = await getMovieDetails(id);
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
+    <div>
+      <header className={styles.header}>
         <ImageWithFallback
-          src={getFullImagePath(movie?.poster_path)}
-          alt={`${movie?.title} backdrop`}
+          src={getFullImagePath(movie.poster_path)}
           layout="fill"
           objectFit="cover"
+          alt={movie.title}
         />
         <div className={styles.headerContent}>
-          <h1 className={styles.title}>{movie?.title}</h1>
-          <p className={styles.genres}>
-            {movie?.genres.map((genre) => genre.name).join(", ")}
-          </p>
-          <p className={styles.runtime}>{movie?.runtime} minutes</p>
+          <h1>{movie.title}</h1>
+          <p>{movie.genres.map((gen) => gen.name).join(",")}</p>
+          <p>{movie.release_date}</p>
+          <p>{movie.runtime} min</p>
         </div>
-      </div>
-
-      <div className={styles.content}>
-        <div className={styles.mainInfo}>
+      </header>
+      <section className={styles.content}>
+        <main className={styles.mainInfo}>
           <ImageWithFallback
-            src={getFullImagePath(movie?.poster_path)}
-            alt={movie?.title}
-            width={300}
-            height={450}
-            className={styles.poster}
+            src={getFullImagePath(movie.poster_path)}
+            width={200}
+            height={300}
+            alt={movie.director.name}
           />
           <div className={styles.synopsis}>
             <h2>Synopsis</h2>
-            <p>{movie?.synopsis}</p>
+            <p>{movie.synopsis}</p>
           </div>
-        </div>
-
-        <div className={styles.crew}>
+        </main>
+        <aside className={styles.crew}>
           <h2>Director</h2>
-          <div className={styles.person}>
-            <ImageWithFallback
-              src={getFullImagePath(movie?.director.image_path)}
-              alt={movie?.director.name}
-              width={100}
-              height={100}
-              className={styles.personImage}
-            />
-            <p className={styles.personName}>{movie?.director.name}</p>
-          </div>
-        </div>
-
-        <div className={styles.cast}>
+          <PersonCard
+            name={movie.director.name}
+            image={getFullImagePath(movie.director.image_path)}
+            summary="Director"
+          />
+        </aside>
+        <aside className={styles.cast}>
           <h2>Cast</h2>
           <div className={styles.castGrid}>
-            {movie?.cast.map((actor) => (
-              <div key={actor?.name} className={styles.person}>
-                <ImageWithFallback
-                  src={getFullImagePath(actor?.image_path)}
-                  alt={actor?.name}
-                  width={100}
-                  height={100}
-                  fallbackSrc="/person-fallback.png"
-                />
-                <p className={styles.personName}>{actor?.name}</p>
-                <p className={styles.character}>{actor?.character}</p>
-              </div>
+            {movie.cast.map((person) => (
+              <PersonCard
+                key={person.name}
+                name={person.name}
+                image={getFullImagePath(person.image_path)}
+                summary={person.character}
+              />
             ))}
           </div>
-        </div>
-      </div>
+        </aside>
+      </section>
     </div>
   );
 }
